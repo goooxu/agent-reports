@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一根针的转身：三维挂谷问题的一百年</title>
+<meta name="description" content="面向非数学专业读者的三维挂谷（Kakeya）问题科普：从1917年的转针谜题，到2025年王虹与Joshua Zahl的证明。">
+<style>
+:root{
+  --bg:#faf7f2; --paper:#fffdfa; --ink:#22201d; --ink-soft:#54504a;
+  --rule:#e3ddd2; --accent:#8a3324; --accent2:#1f4d5c; --hl:#f5e9c8;
+  --code-bg:#f2ede4;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16151a; --paper:#1c1b21; --ink:#e6e2db; --ink-soft:#a8a29a;
+    --rule:#33313a; --accent:#e08a6d; --accent2:#7fc3d6; --hl:#3a3323;
+    --code-bg:#26242c;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Songti SC","Source Han Serif SC","Noto Serif CJK SC","STZhongsong",Georgia,"Times New Roman",serif;
+  font-size:18px; line-height:1.95; letter-spacing:.01em;
+}
+.wrap{max-width:790px;margin:0 auto;padding:0 24px 120px}
+
+/* ---------- 页眉 ---------- */
+header.hero{
+  padding:76px 0 46px; border-bottom:1px solid var(--rule); margin-bottom:52px;
+}
+.kicker{
+  font-size:13px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--accent); font-family:ui-sans-serif,system-ui,"Helvetica Neue",sans-serif;
+  margin:0 0 22px;
+}
+h1{
+  font-size:clamp(34px,6.2vw,54px); line-height:1.28; margin:0 0 24px;
+  font-weight:600; letter-spacing:.02em;
+}
+h1 .sub{display:block;font-size:.48em;color:var(--ink-soft);font-weight:400;margin-top:16px;letter-spacing:.06em}
+.byline{
+  font-size:15px; color:var(--ink-soft); line-height:2;
+  font-family:ui-sans-serif,system-ui,sans-serif;
+}
+.byline b{color:var(--ink);font-weight:600}
+.standfirst{
+  font-size:19.5px; color:var(--ink-soft); margin:30px 0 0;
+  border-left:3px solid var(--accent); padding-left:20px;
+}
+
+/* ---------- 正文 ---------- */
+h2{
+  font-size:27px; margin:76px 0 8px; font-weight:600; line-height:1.5;
+  letter-spacing:.02em;
+}
+h2 .num{
+  display:block; font-size:12.5px; letter-spacing:.24em; color:var(--accent);
+  font-family:ui-sans-serif,system-ui,sans-serif; margin-bottom:12px; font-weight:500;
+}
+h2::after{content:"";display:block;width:46px;height:2px;background:var(--accent);margin-top:18px;opacity:.55}
+h3{font-size:20px;margin:44px 0 -4px;font-weight:600;color:var(--ink)}
+p{margin:22px 0}
+a{color:var(--accent2);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent2) 35%,transparent)}
+a:hover{border-bottom-color:var(--accent2)}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 62%,var(--hl) 62%);padding:0 1px}
+.m{font-family:"Latin Modern Math","Cambria Math",Cambria,Georgia,serif;font-style:italic;letter-spacing:.02em}
+.mm{font-family:"Latin Modern Math","Cambria Math",Cambria,Georgia,serif;letter-spacing:.02em}
+code{background:var(--code-bg);padding:.1em .4em;border-radius:3px;font-size:.88em;font-family:ui-monospace,Menlo,Consolas,monospace}
+
+blockquote{
+  margin:40px 0; padding:4px 0 4px 26px; border-left:3px solid var(--rule);
+  color:var(--ink-soft); font-size:19px;
+}
+blockquote cite{display:block;font-size:15px;font-style:normal;margin-top:12px;opacity:.85}
+blockquote cite::before{content:"—— "}
+
+/* ---------- 旁注框 ---------- */
+.aside{
+  background:var(--paper); border:1px solid var(--rule); border-radius:6px;
+  padding:24px 28px; margin:40px 0; font-size:16.5px; line-height:1.85;
+}
+.aside .tag{
+  display:inline-block; font-size:11.5px; letter-spacing:.18em; color:var(--accent);
+  font-family:ui-sans-serif,system-ui,sans-serif; margin-bottom:10px; font-weight:600;
+}
+.aside p{margin:12px 0}
+.aside p:last-child{margin-bottom:0}
+
+/* ---------- 图 ---------- */
+figure{margin:52px 0;padding:0}
+.fig-box{
+  background:var(--paper); border:1px solid var(--rule); border-radius:6px;
+  padding:26px 22px 20px;
+}
+figcaption{
+  font-size:14.5px; color:var(--ink-soft); line-height:1.85; margin-top:18px;
+  font-family:ui-sans-serif,system-ui,sans-serif;
+}
+figcaption b{color:var(--ink);font-weight:600}
+.panels{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:620px){.panels{grid-template-columns:1fr;gap:20px}}
+.panel{text-align:center}
+.fig-box canvas,.fig-box svg{width:100%;height:auto;display:block}
+.panel .lbl{
+  font-family:ui-sans-serif,system-ui,sans-serif; font-size:13.5px;
+  margin-top:8px; color:var(--ink); font-weight:600;
+}
+.panel .val{
+  font-family:ui-sans-serif,system-ui,sans-serif; font-size:12.5px;
+  color:var(--ink-soft); margin-top:2px;
+}
+.controls{
+  display:flex;align-items:center;gap:14px;margin-top:20px;
+  font-family:ui-sans-serif,system-ui,sans-serif;font-size:14px;flex-wrap:wrap;
+}
+.controls input[type=range]{flex:1;min-width:170px;accent-color:var(--accent)}
+.controls button{
+  font:inherit;font-size:13.5px;padding:6px 15px;border-radius:5px;cursor:pointer;
+  border:1px solid var(--rule);background:var(--bg);color:var(--ink);
+}
+.controls button:hover{border-color:var(--accent);color:var(--accent)}
+.readout{font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.readout b{color:var(--accent);font-weight:600}
+
+/* ---------- 时间线 ---------- */
+.timeline{margin:44px 0;border-left:2px solid var(--rule);padding-left:0}
+.tl-item{position:relative;padding:0 0 30px 30px}
+.tl-item::before{
+  content:"";position:absolute;left:-7px;top:9px;width:12px;height:12px;
+  border-radius:50%;background:var(--bg);border:2px solid var(--rule);
+}
+.tl-item.key::before{background:var(--accent);border-color:var(--accent)}
+.tl-year{
+  font-family:ui-sans-serif,system-ui,sans-serif;font-size:13px;letter-spacing:.1em;
+  color:var(--accent);font-weight:600;
+}
+.tl-body{font-size:16.5px;line-height:1.8;margin-top:3px}
+.tl-body b{font-weight:600}
+
+/* ---------- 表 ---------- */
+table{width:100%;border-collapse:collapse;margin:36px 0;font-size:16px;
+  font-family:ui-sans-serif,system-ui,sans-serif}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:13px;letter-spacing:.08em;color:var(--ink-soft);font-weight:600}
+td.d{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--accent);font-weight:600}
+
+footer.end{
+  margin-top:90px;padding-top:36px;border-top:1px solid var(--rule);
+  font-size:14.5px;color:var(--ink-soft);line-height:2;
+  font-family:ui-sans-serif,system-ui,sans-serif;
+}
+footer.end h3{font-size:15px;letter-spacing:.14em;color:var(--ink);margin:0 0 14px;font-family:inherit}
+footer.end ol{padding-left:22px;margin:0 0 30px}
+footer.end li{margin-bottom:9px}
+.sig{margin-top:34px;font-style:italic;opacity:.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">Mathematics · 深度科普</p>
+  <h1>一根针的转身
+    <span class="sub">三维挂谷问题的一百年，与 2026 年的那枚菲尔兹奖</span>
+  </h1>
+  <p class="byline">
+    作者：<b>Claude</b>（Anthropic Claude Opus 5）<br>
+    2026 年 7 月 · 面向非数学专业的本科生与研究生
+  </p>
+  <p class="standfirst">
+    两天前，2026 年 7 月 23 日，在费城举行的国际数学家大会开幕式上，35 岁的中国数学家<b>王虹</b>接过了菲尔兹奖。
+    授奖词里有一串术语：调和分析、几何测度论、局部光滑性、傅里叶限制性、Falconer 距离集、Furstenberg 集——
+    以及最后那个听上去最不像"数学难题"的短语：<b>三维挂谷问题</b>。
+    这篇文章想讲清楚的是：一个"把针转个身要多大地方"的问题，凭什么值一枚菲尔兹奖。
+  </p>
+</header>
+
+<h2><span class="num">01 / 一个看起来不该难的问题</span>地板上转一根针</h2>
+
+<p>
+1917 年，日本数学家<b>挂谷宗一</b>（Sōichi Kakeya，1886–1947）提出了一个任何人都听得懂的问题：
+</p>
+
+<blockquote>
+在平面上放一根长度为 1 的针。要让它在平面内连续地转过 180°（转完之后针可以停在任何位置，
+但方向要正好掉个头），针扫过的区域<b>最小面积</b>是多少？
+</blockquote>
+
+<p>
+注意"连续"这个词——针不能被拿起来、瞬移到别处再放下。它必须一直贴在地板上，平移、旋转，
+像你在狭窄走廊里搬一根杆子那样挪。它扫过的所有位置的并集，就是我们要衡量面积的那个集合。
+</p>
+
+<p>
+第一个答案几乎是条件反射：<em>转个圈就好了</em>。以针的中点为圆心原地自转，扫出一个直径为 1 的圆盘，
+面积 <span class="mm">π/4 ≈ 0.785</span>。
+</p>
+
+<p>
+但很快你会发现可以更省。针不必绕中点转，它可以一边转一边挪。1921 年，匈牙利数学家 <b>Pál</b> 证明：
+如果要求扫过的区域是<b>凸的</b>（没有凹进去的地方），那么最优解是<b>高为 1 的等边三角形</b>，
+面积 <span class="mm">1/√3 ≈ 0.577</span>——比圆省了四分之一。
+</p>
+
+<p>
+放弃凸性以后，还能更小。挂谷本人（以及 Kakeya 与藤原松三郎）注意到一个更漂亮的图形：<b>三尖瓣线</b>
+（deltoid，又称 Steiner 三尖内摆线）。它是一个半径为 <span class="m">a</span> 的圆在半径为 <span class="m">3a</span>
+的圆内部滚动时，圆周上一点划出的轨迹。它有一条极其优美的性质：<em>它的每条切线被曲线本身截出的线段，
+长度恒为 4a</em>。取 <span class="m">a</span> = 1/4，这条线段的长度正好是 1——一根单位长的针，
+两端顶在曲线上，中点绕着一个半径 1/4 的小圆走一圈，就自然而然地转过了 180°。它扫过的面积是
+<span class="mm">π/8 ≈ 0.393</span>，恰好是圆盘的一半。
+</p>
+
+<figure>
+  <div class="fig-box">
+    <div class="panels">
+      <div class="panel">
+        <canvas id="cvCircle" width="440" height="440"></canvas>
+        <div class="lbl">圆盘</div>
+        <div class="val">面积 π/4 ≈ 0.785</div>
+      </div>
+      <div class="panel">
+        <canvas id="cvTri" width="440" height="440"></canvas>
+        <div class="lbl">等边三角形（高 = 1）</div>
+        <div class="val">面积 1/√3 ≈ 0.577</div>
+      </div>
+      <div class="panel">
+        <canvas id="cvDelt" width="440" height="440"></canvas>
+        <div class="lbl">三尖瓣线</div>
+        <div class="val">面积 π/8 ≈ 0.393</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="btnPlay">暂停</button>
+      <input type="range" id="rngTheta" min="0" max="1000" value="0">
+      <span class="readout">针的方向角 <b id="outTheta">0°</b></span>
+    </div>
+  </div>
+  <figcaption>
+    <b>图 1．</b>同一根单位长的针，在三个区域里各自转过 180°。拖动滑块可以手动控制。
+    三尖瓣线里的针两端始终贴着曲线滑动，中点在一个半径 1/4 的圆上匀速转圈——
+    这是"针的两端各走各的路"带来的额外节省。挂谷曾猜测 π/8 就是最终答案。
+  </figcaption>
+</figure>
+
+<div class="aside">
+  <span class="tag">一个立刻能想到的必要条件</span>
+  <p>
+  如果一根单位长的针能在集合 <span class="mm">K</span> 里转到某个方向 <span class="m">θ</span>，
+  那么 <span class="mm">K</span> 在垂直于 <span class="m">θ</span> 的方向上至少有 1 那么宽。
+  所以：<b>能转针的集合，在每个方向上的宽度都必须 ≥ 1。</b>
+  </p>
+  <p>
+  对<b>凸</b>集来说，这个必要条件其实也是充分的，于是问题变成了"哪个各向宽度都 ≥ 1 的凸集面积最小"——
+  这正是 Pál 解决的那个问题，答案是高为 1 的等边三角形。<em>凸性一旦丢掉，这条推理就断了：
+  集合可以在每个方向上"宽"，却在几乎所有地方都是空的。</em>下一节要造的就是这种东西。
+  </p>
+</div>
+
+<p>
+到这里，故事本该结束了：一个漂亮的极值问题，一个漂亮的极值图形。<b>然而挂谷猜错了，而且错得非常离谱。</b>
+</p>
+
+<h2><span class="num">02 / 一个反直觉到荒谬的答案</span>面积可以任意小</h2>
+
+<p>
+1919 年，年轻的俄国数学家 <b>Abram Besicovitch</b>（贝西科维奇）在彼尔姆大学研究一个完全不同的问题——
+黎曼可积函数的一个技术性问题。为了造反例，他需要一个"很小但方向很全"的集合，于是他构造出了这样一个东西：
+</p>
+
+<blockquote>
+存在平面上一个<b>面积为零</b>的集合，它包含<b>每一个方向</b>的一条单位长线段。
+</blockquote>
+
+<p>
+请把这句话读第二遍。这个集合的测度是 0——它比任何一条曲线都"稀薄"，你往上面扎飞镖永远扎不中；
+可它却装下了朝向 360° 所有方向的针，一个方向都不落。这样的集合今天叫 <b>Besicovitch 集</b>。
+</p>
+
+<p>
+这个构造的命运本身就是个故事。Besicovitch 的论文 1919 年发表在彼尔姆一份地方性的俄文期刊上，
+随即被淹没在革命与内战里——纸张短缺，期刊几乎没有流出国境。1924 年他设法离开苏俄，
+在哥本哈根跟随 Harald Bohr 工作，后来定居剑桥。也正是在那几年，他才第一次听说挂谷在
+十年前提出的转针问题，并立刻意识到：<em>自己那个为了别的目的造出来的、几乎被遗忘的构造，
+顺手就把它解决了。</em>1928 年，他把这个结论重新发表在《Mathematische Zeitschrift》上。
+再配上 Pál 的一个连接技巧（下文会讲），结论是：
+</p>
+
+<blockquote>
+对任意 <span class="m">ε</span> &gt; 0，都存在面积小于 <span class="m">ε</span> 的区域，
+单位长的针能在其中连续转过 180°。
+</blockquote>
+
+<p>
+所以挂谷问题的"最小面积"根本不存在——下确界是 0，且取不到。π/8 那个优雅的三尖瓣线，不是答案，只是个漂亮的误会。
+</p>
+
+<h3>为什么这不违反常识？</h3>
+
+<p>
+关键的一句话是：<em>方向是一维的信息，面积是二维的代价。</em>
+</p>
+
+<p>
+"包含所有方向"这个要求，本质上只对一个<b>一维</b>参数（角度 <span class="m">θ</span> ∈ [0, π)）提出约束。
+而面积是二维的量。二者之间差了一个维度，这个缝隙大到足以让你把无穷多条线段挤进一个几乎不占地方的集合里——
+只要它们<b>重叠得足够狠</b>。而线段的重叠有一个天然的杠杆：<em>平移不改变方向</em>。你可以把一堆指向不同方向的
+细长三角形随意平移、让它们叠成一团，方向的"清单"一条都不会少，面积却大幅缩水。
+</p>
+
+<p>
+这就是 <b>Perron 树</b>（Perron tree）的全部思想。基本步骤只有一步，简单到可以画在餐巾纸上：
+</p>
+
+<p>
+具体做法是：把一个三角形从顶点切成许多细长的薄片。<b>每一片都保留了原三角形的一小段方向范围</b>——
+片虽然细，但从顶点看出去的那个小扇形角度一点没少。接下来沿着底边把这些片<b>水平推挤</b>，
+让它们大面积地叠在一起。平移是刚性运动，<em>片里那些线段的方向一条都没变</em>，
+可叠掉的面积只算一次。<b>方向的账原封不动，面积的账却在缩水。</b>
+</p>
+
+<figure>
+  <div class="fig-box">
+    <canvas id="cvPerron" width="700" height="300"></canvas>
+    <div class="controls">
+      <span>切成</span>
+      <button data-k="0">1 块</button>
+      <button data-k="1">2 块</button>
+      <button data-k="2">4 块</button>
+      <button data-k="3">8 块</button>
+      <button data-k="4">16 块</button>
+      <button data-k="5">32 块</button>
+      <button data-k="6">64 块</button>
+      <button id="btnOpt">自动取最优 α</button>
+    </div>
+    <div class="controls">
+      <span>推挤强度 α</span>
+      <input type="range" id="rngAlpha" min="500" max="995" value="500">
+      <span class="readout">α = <b id="outAlpha">0.500</b>　　剩余面积 <b id="outArea">75%</b></span>
+    </div>
+  </div>
+  <figcaption>
+    <b>图 2．Perron 树。</b>把一个三角形从顶点切成若干细长的"薄片"，再沿底边水平推挤，让它们相互重叠。
+    <b>平移不改变任何一片所含线段的方向</b>，所以方向集合原封不动；但重叠掉的部分只需算一次，
+    总面积（右侧面板下方的百分比由画布像素实测得出）持续下降。
+    最简单的情形可以手算验证：切成 2 块、α = 0.5 时面积恰好降到 <b>75%</b>（α = 2/3 时更优，降到 2/3）。
+    点"自动取最优 α"，64 块可以压到约 <b>27%</b>。经典估计是：切成 2<sup><span class="m">k</span></sup> 块时面积可降到约
+    <span class="mm">2/(k+2)</span>——所以 <span class="m">k</span> → ∞ 时它确实趋于 0，
+    但速度慢得令人绝望。<b>慢，但确实是零，这就是全部要点。</b>
+  </figcaption>
+</figure>
+
+<p>
+图里那个不起眼的滑块 α 值得多说一句。为什么不干脆把所有薄片<b>推到完全重合</b>？
+因为那样虽然重叠最大，却也把整个图形挤成了一根细长的尖刺，<b>面积并不会变小</b>——
+你压缩了宽度，却同时把顶点摊开了同样多。真正的诀窍是<b>只推一部分</b>：
+取 α 略小于 1，两片合并后的图形恰好包含<b>一个缩小 α 倍的三角形"主干"</b>，
+外加两个小小的"<b>枝杈</b>"（sprout）。主干可以继续跟隔壁的主干合并，枝杈则被留在原地，
+成为下一轮的旁观者。
+</p>
+
+<p>
+Perron 树的名字就来自这个形状：一层层合并下去，主干越来越细，枝杈越积越多。
+面积的账是这样算的——主干贡献 <span class="mm">α²ᵏ</span> 量级，枝杈贡献一堆
+<span class="mm">(1−α)²</span> 量级的碎渣。两者是<b>此消彼长</b>的：α 太小则主干缩得快但枝杈太肥，
+α 太大则枝杈很瘦但主干几乎没缩。在每一层上取最优的平衡，总面积大约以
+<span class="mm">2/(k+2)</span> 的速度下降。<em>这就是为什么它趋于零，又为什么趋得那么慢。</em>
+</p>
+
+<div class="aside">
+  <span class="tag">补一个洞：怎么"连续地"转</span>
+  <p>
+  Perron 树给出的是一堆<b>互相分离</b>的碎片，针在里面没法从一片走到另一片。补上这个洞的是 <b>Pál 连接</b>（Pál join）：
+  给定两条平行线，把一根针从其中一条移到另一条，可以在<b>任意小面积</b>的区域内完成——
+  诀窍是先把针沿着自己所在的直线滑到<b>非常远</b>的地方，在那里两条平行线之间的"夹角"看起来几乎为零，
+  于是只需极小的转动和极小的面积就能换轨，再滑回来。
+  </p>
+  <p>
+  把所有碎片用这种"细到几乎没有面积的走廊"缝起来，就得到了真正的、连通的、面积任意小的<b>挂谷针集</b>。
+  </p>
+</div>
+
+<h2><span class="num">03 / 换一把尺子</span>零测度，但有多"大"？</h2>
+
+<p>
+一个自然的反应是："既然答案是 0，那这个问题就死了。"恰恰相反——它才刚刚活过来。
+因为数学家马上意识到：<b>"面积为零"是一把太钝的尺子。</b>
+</p>
+
+<p>
+一个点、一条线段、一条无限长的分形曲线，在平面上的面积都是 0，但它们显然"大小不同"。
+量这种差别的工具叫<b>维数</b>，而且是可以取非整数值的那种维数。
+</p>
+
+<h3>盒计数：用小方块去量一个集合</h3>
+
+<p>
+最容易上手的定义是<b>盒维数</b>（box-counting dimension，也叫 Minkowski 维数）。
+拿边长为 <span class="m">δ</span> 的小方格去铺满整个平面，数一数集合 <span class="mm">E</span> 碰到了多少个方格，
+记作 <span class="mm">N(δ)</span>。然后看 <span class="m">δ</span> → 0 时它怎么增长：
+</p>
+
+<p style="text-align:center;font-size:20px;margin:34px 0">
+<span class="mm">N(δ) ≈ δ<sup>−d</sup></span>　　⟹　　<span class="mm">d = dim(E) = lim<sub>δ→0</sub> log N(δ) / log(1/δ)</span>
+</p>
+
+<p>
+检验一下直觉：一条长为 1 的线段，需要约 <span class="mm">1/δ</span> 个方格 ⟹ <span class="m">d</span> = 1 ✓。
+一个单位正方形需要约 <span class="mm">1/δ²</span> 个 ⟹ <span class="m">d</span> = 2 ✓。
+而经典的三分 Cantor 集需要约 <span class="mm">2<sup>k</sup></span> 个边长 <span class="mm">3<sup>−k</sup></span> 的区间
+⟹ <span class="m">d</span> = log 2 / log 3 ≈ 0.63——<b>介于点与线之间</b>。
+</p>
+
+<figure>
+  <div class="fig-box">
+    <canvas id="cvBox" width="700" height="250"></canvas>
+    <div class="controls">
+      <span>格子边长 δ =</span>
+      <button data-n="3">1/3</button>
+      <button data-n="9">1/9</button>
+      <button data-n="27">1/27</button>
+      <button data-n="81">1/81</button>
+      <span class="readout">当前 <b id="outN">1/3</b></span>
+    </div>
+  </div>
+  <figcaption>
+    <b>图 3．盒计数。</b>三个集合放在同一个单位正方形里，用边长 <span class="m">δ</span> 的格子去数：
+    <b>被碰到的格子</b>标成深色，<span class="mm">N(δ)</span> 就是它们的个数。
+    换更细的格子，看 <span class="mm">N(δ)</span> 涨得多快——涨得越快，集合越"实心"。
+    中间那个是 <b>Cantor 尘</b>（两个三分 Cantor 集的乘积）：它比线粗，比面薄，
+    <span class="mm">N(δ)</span> 每次细分恰好变成 4 倍而 <span class="mm">1/δ</span> 变成 3 倍，
+    于是维数稳稳地停在 <span class="mm">log 4 / log 3 ≈ 1.262</span>——
+    <b>一个货真价实的分数维。</b>三个数字在每一级网格上都精确等于 1、1.262、2，你可以逐级验证。
+  </figcaption>
+</figure>
+
+<p>
+另一个等价的说法更适合我们后面用：把 <span class="mm">E</span> 加粗成它的 <span class="m">δ</span>-邻域
+（所有到 <span class="mm">E</span> 距离小于 <span class="m">δ</span> 的点），那么在 <span class="mm">ℝ<sup>n</sup></span> 中
+</p>
+
+<p style="text-align:center;font-size:20px;margin:34px 0">
+<span class="mm">体积(E<sub>δ</sub>) ≈ δ<sup> n−d</sup></span>
+</p>
+
+<p>
+维数越接近 <span class="m">n</span>，加粗后的体积衰减得越慢，集合就越"实心"。
+</p>
+
+<h3>Hausdorff 维数：为什么它才是硬骨头</h3>
+
+<p>
+盒维数有个笨拙之处：它规定所有格子<b>一样大</b>。<b>Hausdorff 维数</b>放宽了这一条——
+允许你用<b>大小不一</b>的小球去覆盖，谁小谁上。覆盖手段更强，量出来的维数就更小，
+所以永远有 <span class="mm">dim<sub>H</sub> ≤ dim<sub>box</sub></span>。
+</p>
+
+<p>
+两者能差多远？看一个极端例子：<b>[0,1] 区间里的全体有理数</b>。它是可数集，
+用一列迅速缩小的小区间就能把它盖住且总长任意小，所以 Hausdorff 维数是 <b>0</b>——和一个点一样"小"。
+可它在 [0,1] 里稠密，任何一个边长 <span class="m">δ</span> 的格子都含有理数，
+于是 <span class="mm">N(δ) = 1/δ</span>，盒维数是 <b>1</b>。<em>同一个集合，一个说 0，一个说 1。</em>
+</p>
+
+<p>
+差别的来源正是<b>尺度</b>：盒维数只在一个尺度上看问题，而 Hausdorff 维数允许集合在
+<b>不同尺度上用不同的策略</b>躲避覆盖。挂谷猜想要求两个维数都等于 <span class="m">n</span>，
+而 Hausdorff 那一半之所以难，恰恰因为一个假想的反例可以在
+<span class="mm">δ</span>、<span class="mm">δ<sup>1/2</sup></span>、<span class="mm">δ<sup>1/4</sup></span> …
+每个尺度上换一副面孔。<b>请记住这句话——它就是第 05 节里"多尺度归纳"要对付的东西。</b>
+</p>
+
+<div class="aside">
+  <span class="tag">一句话记住区别</span>
+  <p>
+  <b>测度</b>问"它占多少地方"；<b>维数</b>问"它以什么样的速率变小"。
+  Besicovitch 集在第一个问题上得零分，在第二个问题上却是满分——这正是它有趣的地方。
+  </p>
+</div>
+
+<p>
+1971 年，<b>Roy Davies</b> 证明了平面上的情形：<em>任何 Besicovitch 集，尽管面积为零，Hausdorff 维数必定等于 2</em>。
+它稀薄到没有面积，却"稠密"到维数满格。于是问题被彻底重新表述：
+</p>
+
+<blockquote>
+<b>挂谷猜想（Kakeya conjecture）</b>　在 <span class="mm">ℝ<sup>n</sup></span> 中，任何包含每个方向单位线段的集合，
+其 Hausdorff 维数与 Minkowski 维数都必须等于 <span class="m">n</span>。
+</blockquote>
+
+<p>
+<span class="m">n</span> = 1 平凡，<span class="m">n</span> = 2 由 Davies 解决。
+<b>下一个情形，<span class="m">n</span> = 3，卡了整整半个世纪。</b>
+</p>
+
+<h2><span class="num">04 / 把针换成管子</span>三维为什么这么难</h2>
+
+<p>
+现代的做法是把问题<b>离散化</b>：既然要谈 <span class="m">δ</span>-邻域的体积，不如从一开始就把"针"加粗成
+<b>管子</b>（tube）——一根 <span class="mm">1 × δ × δ</span> 的细长圆柱。
+</p>
+
+<p>
+在 <span class="mm">ℝ³</span> 中，方向构成一个二维球面；把球面按 <span class="m">δ</span> 的精度分格，
+大约有 <span class="mm">δ<sup>−2</sup></span> 个"本质不同"的方向。每个方向取一根管子，一共
+<span class="mm">δ<sup>−2</sup></span> 根。每根管子体积约 <span class="mm">δ²</span>，所以如果它们完全不重叠，
+并集体积约为 <span class="mm">δ<sup>−2</sup> · δ² = 1</span>。挂谷猜想等价于说：
+</p>
+
+<blockquote>
+无论你怎样摆放这 <span class="mm">δ<sup>−2</sup></span> 根方向各异的管子，它们的并集体积都不可能小于
+<span class="mm">δ<sup>ε</sup></span>——也就是说，<b>重叠最多只能省下一个"可忽略"的因子</b>。
+</blockquote>
+
+<p>
+这是一个纯粹的<b>组合几何 / 关联几何</b>问题：管子之间到底能重叠多狠？直觉上"当然不能太狠"，
+可要把它变成证明，三维空间设置了两道恶毒的障碍。
+</p>
+
+<h3>障碍一：三维里的直线太自由了</h3>
+
+<p>
+在平面上，两条方向不同的直线<b>必定相交</b>。这个几乎白送的事实是二维证明的发动机：
+你随便挑一根管子，其它所有方向的管子都必须来跟它打招呼，于是"重叠"立刻被局部化、被计数、被控制住。
+用调和分析的语言说，平面上的直线是<b>余维数 1</b> 的，是超平面，逃不掉。
+</p>
+
+<p>
+在三维空间里，两条一般位置的直线<b>互不相交</b>——它们是异面的。直线在 <span class="mm">ℝ³</span> 中余维数为 2，
+而全体直线构成的空间是 <b>4 维</b>的。这意味着管子们有海量的"躲闪空间"，可以在几乎不相交的前提下摆出
+极其古怪的构型。二维那台发动机在这里直接熄火。
+</p>
+
+<p>
+数一下参数就看得更清楚。<span class="mm">ℝ³</span> 里确定一条直线要 <b>4</b> 个数：
+2 个描述方向（球面上的一点），2 个描述它在垂直平面里的位置。而平面上只要 <b>2</b> 个。
+挂谷问题强制规定了"方向"那部分——平面上方向用掉 1 个参数，只剩 <b>1</b> 个自由度可以摆弄；
+三维里方向用掉 2 个，还剩 <b>2</b> 个。<em>多出来的那一个自由度，就是三十年的差距。</em>
+</p>
+
+<p>
+那就换个思路：<b>如果并集体积很小，说明重叠很严重；重叠严重，就一定存在某个点被特别多的管子穿过。</b>
+抓住这个点，把穿过它的所有管子拿出来，得到一个<b>丛</b>（bush）——一把从一点射出的箭。
+丛里的管子方向各异，彼此只在中心附近挤在一起，稍微走远一点就必须散开，散开就要占体积。
+这就是 <b>Bourgain 1991</b> 的思路，它把三维下界推到了 <span class="mm">7/3</span>。
+</p>
+
+<p>
+1995 年，<b>Thomas Wolff</b> 把这个想法换了一个更聪明的支点，得到<b>发刷论证</b>（hairbrush argument）。
+丛的毛病在于：所有管子只在<b>一个点</b>处提供信息，太浪费了。Wolff 改为挑<b>一整根管子</b>当"刷柄"，
+把所有与它相交的管子收集起来当"刷毛"。刷毛们沿着刷柄的<b>整条长度</b>分布，
+而含有同一根刷柄的管子必定落在一族绕刷柄旋转的平面里——这就把一个三维问题压回到了
+"每张平面里的二维挂谷问题"，然后逐平面相加。这一招把下界推到了 <span class="mm">5/2</span>。
+</p>
+
+<figure>
+  <div class="fig-box">
+    <canvas id="cvBrush" width="700" height="290"></canvas>
+  </div>
+  <figcaption>
+    <b>图 4．丛与发刷。</b>两种从"重叠很多"里榨取信息的方式。
+    <b>丛</b>（左）以一个点为支点，管子在中心堆叠、向外发散；
+    <b>发刷</b>（右）以一整根管子为支点，刷毛沿它的全长散开。
+    发刷的信息量大得多——这就是 Bourgain 的 7/3 与 Wolff 的 5/2 之间的差距。
+    而接下来的三十年证明了：<em>无论支点选得多巧妙，只挑一个支点，就到 5/2 为止。</em>
+  </figcaption>
+</figure>
+
+<h3>障碍二：那个专门克制所有方法的例子</h3>
+
+<p>
+然后，<b>5/2 这个数字纹丝不动地卡了三十年。</b>
+</p>
+
+<p>
+罪魁祸首是一族被称为 <b>Heisenberg 群构型</b>（或 <b>SL₂ 例子</b>）的直线：
+一个三参数的直线族，它高度地"<b>贴平面</b>"（英文文献叫 <em>plany</em>）——
+在这族直线经过的每一个点附近，穿过该点的那些直线几乎都躺在同一张平面里。
+</p>
+
+<p>
+它并不是挂谷猜想的反例（它的维数确实是 3）。它的恶毒之处在于：<b>它恰好让所有已知论证给出的下界都等于 5/2，
+一点不多。</b>发刷论证在它面前是紧的。任何想突破 5/2 的人，都必须先想出办法把这一族构型单独拎出来处理掉。
+Katz–Łaba–Tao 在 2000 年、Katz–Zahl 在 2019 年各自撬开了一条极细的缝，把 5/2 变成了
+"5/2 加上一个小到需要科学计数法来写的常数"——足以证明 5/2 不是终点，但离 3 依然遥不可及。
+</p>
+
+<table>
+  <thead><tr><th>年份</th><th>作者</th><th style="width:7em">下界</th><th>关键想法</th></tr></thead>
+  <tbody>
+  <tr><td>——</td><td>平凡</td><td class="d">1</td><td>集合至少包含一条线段</td></tr>
+  <tr><td>1970s</td><td>Córdoba 等</td><td class="d">2</td><td>L² 正交性 / 管子两两相交估计</td></tr>
+  <tr><td>1991</td><td>Bourgain</td><td class="d">7/3 ≈ 2.333</td><td>"丛"（bush）论证 + 算术组合</td></tr>
+  <tr><td>1995</td><td>Wolff</td><td class="d">5/2 = 2.5</td><td><b>发刷论证</b></td></tr>
+  <tr><td>2000</td><td>Katz–Łaba–Tao</td><td class="d">5/2 + 10<sup>−10</sup></td><td>"黏性"归约 + 颗粒结构（Minkowski 维数）</td></tr>
+  <tr><td>2019</td><td>Katz–Zahl</td><td class="d">5/2 + ε₀</td><td>把上述推进到 Hausdorff 维数</td></tr>
+  <tr><td>2025</td><td><b>Wang–Zahl</b></td><td class="d">3</td><td><b>凸集并集的体积估计 + 多尺度归纳</b></td></tr>
+  </tbody>
+</table>
+
+<div class="aside">
+  <span class="tag">一个耐人寻味的对照：有限域版本</span>
+  <p>
+  1999 年 Wolff 提出了挂谷问题在<b>有限域</b> <span class="mm">𝔽<sub>q</sub><sup>n</sup></span> 上的类比：
+  一个包含每个方向直线的集合，元素个数是否必须 ≳ <span class="mm">q<sup>n</sup></span>？
+  这个版本被认为是通往实数情形的踏脚石。
+  </p>
+  <p>
+  2009 年，<b>Zeev Dvir</b> 用<b>多项式方法</b>把它解决了——证明只有<b>一页纸</b>。
+  思路简单得让人生气：若集合太小，就存在一个次数不高的非零多项式在它上面全体为零；
+  但该多项式沿每条直线的限制是个低次一元多项式且有太多零点，于是恒为零；
+  逐次剥离最高次齐次部分，导出矛盾。
+  </p>
+  <p>
+  <b>为什么这一页纸对实数完全无效？</b>因为有限域没有"尺度"。实数轴可以无限放大，
+  一个集合可以在 <span class="mm">δ</span>、<span class="mm">δ<sup>1/2</sup></span>、<span class="mm">δ<sup>1/4</sup></span> …
+  每一个尺度上耍不同的花招，而多项式方法看不见这种跨尺度的结构。<b>"尺度"正是实数情形全部困难的来源，
+  也正是 Wang–Zahl 最终攻克它的地方。</b>
+  </p>
+</div>
+
+<h2><span class="num">05 / 2025 年 2 月 24 日</span>127 页，和一台"永动机"</h2>
+
+<p>
+2025 年 2 月 24 日，纽约大学柯朗研究所的<b>王虹</b>与不列颠哥伦比亚大学的 <b>Joshua Zahl</b>
+把一篇 127 页的论文挂上了 arXiv，标题是：
+</p>
+
+<blockquote>
+<b>Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions</b><br>
+<span style="font-size:16px">（凸集并集的体积估计，与三维挂谷集猜想）</span>
+</blockquote>
+
+<p>
+摘要只有三句话。第三句是：<em>"作为推论，我们证明 <span class="mm">ℝ³</span> 中的每个挂谷集的
+Minkowski 维数与 Hausdorff 维数都等于 3。"</em>
+</p>
+
+<p>
+陶哲轩当天在博客上写道，这是一个"极为出色的成就"。Nets Katz——本人在这条战线上奋战了二十年——
+的评价被 Quanta 引用为：<b>"a once-in-a-century kind of result."</b>
+</p>
+
+<h3>第一步：把敌人写进定理</h3>
+
+<p>
+论文标题里根本没出现"挂谷"两个字，这不是谦虚，而是全部策略所在。
+</p>
+
+<p>
+回想那个卡住所有人的 Heisenberg 构型：它的病灶在于<b>管子扎堆躺在薄板里</b>，而薄板是<b>凸集</b>。
+既然如此，与其绕开这个敌人，不如<b>把"不许扎堆在凸集里"变成定理的明文假设</b>。
+Wang–Zahl 证明的核心命题因此是一个关于凸集的一般性陈述：
+</p>
+
+<blockquote>
+若一族 <span class="m">δ</span>-管子满足"任何一个凸集都装不下太多根"，
+那么它们的并集体积<b>几乎是最大可能的</b>。
+</blockquote>
+
+<p>
+挂谷猜想成了它的推论。这是一种典型的数学品味：<em>当某个特例反复卡住你，往往说明你的定理陈述的形状不对。
+把特例的特征提炼成假设，定理就会自己走向正确的一般性。</em>
+</p>
+
+<h3>第二步：从"太小"逼出"太有结构"</h3>
+
+<p>
+证明用反证法，主旋律是调和分析里被称为 <b>"结构 vs. 随机性"</b>（structure versus randomness）的老配方：
+</p>
+
+<p>
+假设存在一个维数小于 3 的反例，即一堆管子的并集体积异常地小。体积小意味着<b>重叠必须极其高效</b>，
+而高效的重叠是不可能靠运气实现的——它会强迫这堆管子呈现出<b>刚性的几何组织</b>。
+沿着 Larry Guth 与 Katz–Łaba–Tao 开创的路线，Wang–Zahl 证明：这样的管束必须在每个尺度上组织成
+<b>"颗粒"</b>（grains）——尺寸约为 <span class="mm">δ × ρc × c</span> 的薄板，管子成片地躺在薄板里。
+</p>
+
+<p>
+这条路上有一块重要的垫脚石叫<b>"黏性"</b>（sticky）。Katz–Łaba–Tao 早在 2000 年就发现：
+如果反例存在，可以把它整理成一种特别规整的形态——<b>方向相近的管子，位置也必须相近</b>，
+就像管子被"粘"在方向球面上一样。黏性反例是<b>自相似</b>的：放大任何一小块，看到的还是同一副图景。
+王虹与 Zahl 在 2022 年先证明了<b>黏性情形</b>不可能存在。
+2025 年这篇论文的真正战场，是剩下的<b>非黏性</b>情形——管子允许在不同尺度上重新洗牌。
+</p>
+
+<p>
+然后把这个论证<b>再做一次</b>：如果颗粒本身的排布又不构成挂谷式的构型，那它们必须进一步聚拢成更大的
+<b>凸棱柱</b>，并且棱柱里的管子密度要<b>超过</b>挂谷构型的正常密度（作者称之为 <em>super-Kakeya</em>）。
+换句话说：每当你想让集合变小一点，几何就逼你付出更强的"过度有序"的代价。
+</p>
+
+<h3>第三步：多尺度归纳——那台永动机</h3>
+
+<p>
+把不同尺度串起来的是<b>尺度归纳法</b>（induction on scales）。粗略地说，管子在某点的重叠重数
+<span class="m">μ</span> 被拆成两个因子：
+</p>
+
+<p style="text-align:center;font-size:20px;margin:32px 0">
+<span class="mm">μ ≲ μ<sub>粗</sub> · μ<sub>细</sub></span>
+</p>
+
+<p>
+——粗尺度上"颗粒"之间的重叠，乘以颗粒内部细尺度上管子之间的重叠。
+这比经典的"胖管子 × 细管子"分解精细得多，而正是这份精细让不等式可以<b>自举</b>：
+证明在维数 <span class="m">d</span> 处成立，就能推出在 <span class="m">d</span> + <span class="m">ε</span> 处也成立；
+从 Wolff 的 5/2 出发，一级一级往上顶，直到 3 为止——3 是这台机器的天花板，因为那时不等式恰好收紧成等号。
+</p>
+
+<p>
+现在可以回收第 03 节埋下的那句话了。Hausdorff 维数之所以是硬骨头，
+是因为一个假想的反例可以<b>在每个尺度上换一副面孔</b>。
+而尺度归纳法的回应恰恰是：<em>好，那我就在每一对相邻尺度之间都架一道不等式，让你无处可换。</em>
+颗粒结构负责描述"这个尺度上长什么样"，尺度归纳负责把相邻尺度锁死。
+<b>敌人的武器是尺度，那就把尺度本身变成论证的骨架。</b>
+</p>
+
+<blockquote>
+陶哲轩把这类论证形容为"像在调试一台永动机"：整个循环必须<b>零损耗</b>地闭合。
+任何一步只要浪费掉一个不可忽略的因子，每绕一圈就衰减一点，迭代下去就归于零，什么也证不出来。
+127 页里的绝大部分工作，就是把每一个指数追踪到毫厘不差。
+</blockquote>
+
+<p>
+最后是收网。结构定理给出两种情形，分别被两把不同的刀砍掉：
+</p>
+
+<ul>
+<li><b>厚棱柱</b>：管子在一个有一定厚度的凸区域里过度密集，这与 Frostman 测度给出的局部密度上界直接冲突
+（Hausdorff 维数假设本身就禁止集合在小球里"太重"）。</li>
+<li><b>薄棱柱</b>（厚度约 <span class="m">δ</span>，也就是最接近 Heisenberg 例子的情形）：
+回到 Córdoba 在 1970 年代的经典 <span class="mm">L²</span> 方法，配上 super-Kakeya 提供的额外重数，
+可以推出"颗粒已经不能再大了"的矛盾。</li>
+</ul>
+
+<p>
+两种情形都不成立，反例不存在。<span class="mm">dim = 3</span>。■
+</p>
+
+<div class="aside">
+  <span class="tag">给想再往前一步的读者</span>
+  <p>
+  原论文：<a href="https://arxiv.org/abs/2502.17655">arXiv:2502.17655</a>（127 页）。
+  同年 5 月，Wang 与 Zahl 写了一份 <a href="https://arxiv.org/abs/2505.07695">导读</a>（
+  <em>Introduction to the proof of the Kakeya conjecture</em>），用几十页讲清主线，比原文友好得多。
+  2026 年初已经出现了<b>精简版证明</b>，篇幅大幅缩短——这是一个定理被数学共同体"消化"的标准过程：
+  先有人翻过山，然后大家一起修路。
+  </p>
+</div>
+
+<h2><span class="num">06 / 为什么值一枚菲尔兹奖</span>它不是一道谜题，它是一块地基</h2>
+
+<p>
+如果挂谷猜想只是"关于针的一个古怪事实"，它不会有这样的地位。它的重量来自一件事：
+<b>它是一大批重要猜想的必要条件。</b>塔要往上盖，这块地基必须先夯实。
+</p>
+
+<h3>调和分析：那座塔</h3>
+
+<p>
+先说傅里叶分析里为什么会冒出"管子"。取一个函数，它的傅里叶变换支撑在球面附近的一小块"帽子"上。
+由不确定性原理，这样的函数在物理空间中并不是弥散的一团，而是集中在一根<b>细长的管子</b>上——
+方向由帽子的位置决定，粗细由帽子的尺寸决定。这种基本单元叫<b>波包</b>（wave packet）。
+</p>
+
+<p>
+于是，"把整个球面上的所有帽子加起来会得到多大的函数"这个分析问题，就变成了
+"<b>这些指向各个方向的管子最多能叠得多狠</b>"这个几何问题。<em>那正是挂谷问题。</em>
+</p>
+
+<p>
+这条链自下而上是：
+</p>
+
+<p style="text-align:center;font-size:17.5px;margin:32px 0;line-height:2.2;font-family:ui-sans-serif,system-ui,sans-serif">
+<b>Bochner–Riesz 求和</b>　⟹　<b>傅里叶限制性猜想</b>　⟹　<b>挂谷猜想</b><br>
+<b>波动方程局部光滑性</b>　⟹　<b>挂谷猜想</b>
+</p>
+
+<p>
+箭头的方向意味着：<b>挂谷猜想若是假的，上面每一个都立刻是假的。</b>
+这不是空谈——历史上真发生过一次。1971 年，<b>Charles Fefferman</b> 用 Besicovitch 集
+<b>推翻</b>了当时人们普遍相信的<b>球乘子猜想</b>：他证明"把傅里叶变换截断在单位球内"这个再自然不过的操作，
+在 <span class="mm">n ≥ 2</span> 维、<span class="mm">p ≠ 2</span> 时在 <span class="mm">L<sup>p</sup></span> 上<b>无界</b>。
+</p>
+
+<p>
+Fefferman 的论证漂亮得像个魔术，值得说一说梗概。球乘子若有界，那么把频率截断在<b>任意一个半平面</b>
+上的算子也有界，且界不随半平面的方向变化（半平面是球面在局部的极限）。
+现在取一个 Besicovitch 集，把它拆成方向各异的一堆细管；在每根管子上放一个频率被"推"向该管方向的波包。
+这些波包在物理空间里几乎不重叠，所以它们叠加起来的模长很小；
+可一旦施加方向各异的半平面截断，每个波包都会长出一条<b>沿自己方向拖出去的尾巴</b>，
+而这些尾巴恰好落在 Besicovitch 集<b>之外</b>的一片区域上，并且彼此<b>同相叠加</b>。
+零面积的集合意味着"尾巴"能占的地方比"本体"大得无穷倍——不等式就此崩溃。
+</p>
+
+<p>
+翻译成人话：<em>高维的傅里叶级数，如果你按"球形"的顺序求和，可能会发散。</em>
+一根针能在零面积里转身这件事，直接决定了三维空间中信号重建的一个基本事实。这就是为什么调和分析家们
+在过去五十年里如此执着于它。
+</p>
+
+<h3>偏微分方程：光线、焦散与波的聚焦</h3>
+
+<p>
+把针换成<b>光线</b>，挂谷问题立刻有了物理意味。在几何光学近似下，波沿直线传播；
+一个 Besicovitch 集就是一间<b>体积为零、却能把光射向所有方向的镜厅</b>。
+波在某处能剧烈聚焦到什么程度（<b>焦散</b>，caustic），本质上由"射线管能叠多狠"控制。
+</p>
+
+<p>
+这正是 <b>局部光滑性猜想</b>（Sogge）的内容：波动方程的解在<b>时间上取平均</b>之后，
+应该比任意单个时刻更光滑——因为焦散点转瞬即逝，无法持续。王虹在 2020 年前后与 Larry Guth、
+Ruixiang Zhang 合作解决了<b>平面情形</b>的局部光滑性猜想，那是她菲尔兹奖引文里排在第一位的工作。
+</p>
+
+<h3>理论计算机科学：一条真实的技术转移管线</h3>
+
+<p>
+这一条对 CS 背景的读者可能最有共鸣。2009 年 Dvir 用多项式方法解决有限域挂谷问题之后，
+同一套技术几乎立刻被搬进了理论计算机科学：
+</p>
+
+<ul>
+<li><b>随机性抽取器</b>（randomness extractor）：Dvir–Wigderson 等人用挂谷型的估计构造出
+从"弱随机源"中提炼近乎均匀随机比特的算法——去随机化与密码学的基础部件。</li>
+<li><b>局部可解码码 / Reed–Muller 码的列表译码</b>：低次多项式在直线上的行为，正是这些编码方案的核心引理。</li>
+<li><b>代数方法</b>成为组合几何的标准工具，随后 Guth–Katz 用它解决了 Erdős 相异距离问题。</li>
+</ul>
+
+<p>
+一个 1917 年关于转针的问题，一百年后变成了你手机里伪随机数生成器背后数学的一部分。
+</p>
+
+<h3>其它</h3>
+
+<p>
+挂谷型的估计还与<b>数论</b>中的指数和与圆法、<b>几何测度论</b>中的 Falconer 距离集问题与
+Furstenberg 集问题密切相关——后两者也都写在了王虹的菲尔兹奖引文里。
+这些问题共享同一副骨架：<em>低维物体（点、线、管）在高维空间中能有多"关联"。</em>
+</p>
+
+<p>
+举一个能立刻听懂的：<b>Falconer 距离集问题</b>问的是，
+平面上一个 Hausdorff 维数为 <span class="m">s</span> 的点集，
+它内部所有点对的<b>距离</b>能构成多大的集合？直觉上，点越多、距离就该越多。
+Falconer 猜想 <span class="m">s</span> &gt; 1 时距离集就该有正的长度。
+注意"到某点距离为 <span class="m">r</span> 的点"构成一个圆，
+而<b>圆和直线一样，是一维的曲线在二维里堆叠</b>——于是同一套"薄物体能重叠多狠"的机器又转了起来。
+王虹与 Guth、Iosevich、Ou 等人正是在这个问题上取得了突破。
+</p>
+
+<div class="aside">
+  <span class="tag">按专业找一个入口</span>
+  <p>
+  <b>物理 / 光学：</b>Besicovitch 集是一间体积为零、却能把光射向所有方向的镜厅。
+  你关心的"焦散"和"衍射极限"，数学上的天花板就由这类估计决定。
+  </p>
+  <p>
+  <b>计算机 / 密码学：</b>从 Dvir 的多项式方法出发，一条线通向随机性抽取器与局部可解码码。
+  关键词：<code>polynomial method</code>、<code>randomness extractor</code>、<code>Reed–Muller list decoding</code>。
+  </p>
+  <p>
+  <b>电子 / 信号处理：</b>"波包 = 管子"这个字典就是时频分析的几何版本。
+  Fefferman 的球乘子定理说的是：<b>理想的二维低通滤波器在 <span class="mm">L<sup>p</sup></span>（<span class="mm">p ≠ 2</span>）意义下不存在</b>。
+  </p>
+</div>
+
+<h2><span class="num">07 / 停一下</span>三个特别容易踩的坑</h2>
+
+<p>
+这个问题的迷人之处，一半来自它的直觉陷阱。下面三条是我认为最值得停下来想清楚的。
+</p>
+
+<h3>误解一："测度为零，所以它很小"</h3>
+
+<p>
+这是全篇最需要卸载的直觉。<b>测度和维数量的是两件不同的事。</b>
+测度问"它占多少地方"，维数问"当你把尺子缩小时，它以多快的速度还在那里"。
+一个 Besicovitch 集在第一个问题上得零分，在第二个问题上却是满分。
+把它想象成一团<b>无限细的雾</b>：称重是零，可你无论把视野放大到多小的尺度，它都还在，而且到处都在。
+</p>
+
+<h3>误解二："维数等于 3，所以挂谷集是有体积的"</h3>
+
+<p>
+<b>不对，而且这是全文最容易搞混的一点。</b>王虹与 Zahl 证明了 <span class="mm">ℝ³</span> 中每个挂谷集的
+Hausdorff 维数<b>等于 3</b>——但 Besicovitch 集的 Lebesgue 测度<b>依然可以是零，而且确实是零</b>。
+这两件事并不矛盾。
+</p>
+
+<p>
+原因在于：维数是一个<b>临界指数</b>。它标记的是"从测度无穷跳到测度零"的那个转折点，
+而<b>恰好在转折点上</b>，测度可以是 0、可以是有限、也可以是无穷。
+一个熟悉的例子：在直线上可以构造 Hausdorff 维数恰为 1、长度却为 0 的 Cantor 型集合——
+它"和线段一样粗"，却"和点一样轻"。
+</p>
+
+<p>
+所以这个定理说的<b>不是</b>"挂谷集必须占地方"，而是：
+<em>挂谷集可以没有体积，但它绝不可能比"满维"更薄。</em>
+零测度是它能达到的极限，而它必须<b>紧贴</b>着这个极限——一步也不能再退。
+</p>
+
+<h3>误解三："朴素的体积论证应该就够了"</h3>
+
+<p>
+这是最值得算一遍的。<span class="mm">δ<sup>−2</sup></span> 根管子，每根体积 <span class="mm">δ²</span>，
+总账正好是 1。用 Cauchy–Schwarz 不等式，并集体积的下界由<b>重叠的平方</b>控制，
+而重叠可以用<b>两两相交</b>的体积加总估计：两根夹角为 <span class="m">θ</span> 的管子，
+相交部分体积约 <span class="mm">δ³/θ</span>。把所有管子对加起来，算出来的答案是——
+</p>
+
+<p style="text-align:center;font-size:20px;margin:32px 0">
+<span class="mm">dim ≥ 2</span>
+</p>
+
+<p>
+<b>不多不少，正好 2。</b>这就是表格里 Córdoba 那一行。它离 3 差了整整一个维度，
+而且不是因为算得不够仔细：这个方法<b>只看得见两两关系</b>。它默认所有管子对可以<b>同时</b>达到最大相交，
+而现实中它们做不到——三根、四根、一百根管子之间的相互牵制，L² 方法完全看不见。
+</p>
+
+<p>
+从 2 到 3 的这一个维度，就是 Bourgain、Wolff、Katz、Łaba、Tao、Guth、Zahl、王虹这一长串名字
+花了三十五年填上的。<em>而其中最后那 0.5，用掉了三十年。</em>
+</p>
+
+<h2><span class="num">08 / 尾声</span>费城，2026 年 7 月 23 日</h2>
+
+<p>
+王虹 1991 年生于广西桂林平乐县。2007 年考入北京大学地球与空间科学学院，第二年转到数学科学学院；
+2011 年本科毕业后赴法国，先后取得巴黎综合理工学院工程师学位与巴黎-萨克雷大学硕士学位；
+2019 年在麻省理工学院获得博士学位，导师是 Larry Guth——这条师承线索并非巧合，
+Guth 正是"颗粒"概念与多项式方法在挂谷问题上的主要推动者之一。此后她在普林斯顿高等研究院做博士后、
+在 UCLA 任助理教授，现任纽约大学柯朗研究所 Silver Professor 与法国高等科学研究院（IHES）终身教授。
+</p>
+
+<p>
+2026 年 7 月 23 日，在费城举行的国际数学家大会开幕式上，她与邓煜、John Pardon、Jacob Tsimerman
+一同获颁菲尔兹奖。她是历史上<b>第三位</b>获此荣誉的女性；同时这也是<b>首次</b>有两位中国籍数学家在同一届获奖。
+她的合作者 Joshua Zahl 现任不列颠哥伦比亚大学副教授。
+</p>
+
+<div class="timeline">
+  <div class="tl-item"><div class="tl-year">1917</div><div class="tl-body">挂谷宗一提出转针问题。</div></div>
+  <div class="tl-item"><div class="tl-year">1919 / 1928</div><div class="tl-body"><b>Besicovitch</b> 构造出零面积却含所有方向线段的集合；1928 年意识到它解决了挂谷问题。</div></div>
+  <div class="tl-item"><div class="tl-year">1921</div><div class="tl-body">Pál 证明凸情形的最优解是高为 1 的等边三角形，并给出"连接走廊"技巧。</div></div>
+  <div class="tl-item"><div class="tl-year">1971</div><div class="tl-body"><b>Davies</b> 证明平面 Besicovitch 集的 Hausdorff 维数必为 2。同年 <b>Fefferman</b> 用 Besicovitch 集推翻球乘子猜想。</div></div>
+  <div class="tl-item"><div class="tl-year">1991</div><div class="tl-body">Bourgain 把三维下界推到 7/3。</div></div>
+  <div class="tl-item" ><div class="tl-year">1995</div><div class="tl-body"><b>Wolff</b> 的发刷论证给出 5/2——此后三十年纹丝不动。</div></div>
+  <div class="tl-item"><div class="tl-year">2000 / 2019</div><div class="tl-body">Katz–Łaba–Tao 与 Katz–Zahl 撬开 5/2 + ε 的缝隙，确认 5/2 不是终点。</div></div>
+  <div class="tl-item"><div class="tl-year">2009</div><div class="tl-body"><b>Dvir</b> 用一页纸的多项式方法解决有限域版本，引爆代数方法在组合与 CS 中的应用。</div></div>
+  <div class="tl-item key"><div class="tl-year">2025 · 2 · 24</div><div class="tl-body"><b>王虹 &amp; Joshua Zahl</b> 证明三维挂谷猜想：<span class="mm">dim = 3</span>。</div></div>
+  <div class="tl-item key"><div class="tl-year">2026 · 7 · 23</div><div class="tl-body"><b>王虹获菲尔兹奖</b>（费城 ICM）。</div></div>
+</div>
+
+<h3>还剩什么</h3>
+
+<p>
+故事远没有结束。至少有三件事摆在桌上：
+</p>
+
+<ul>
+<li><b>更高的维数。</b><span class="mm">n ≥ 4</span> 的挂谷猜想<b>依然开放</b>。
+很多人相信 Wang–Zahl 的多尺度机器可以升维，但三维证明里用到的一些几何事实
+（比如"直线的余维数恰好是 2"）在四维不再成立，需要新的想法。</li>
+
+<li><b>定量版本。</b>"维数等于 3"是一个<b>定性</b>陈述。往上盖楼需要的是带明确指数的
+<b>定量</b>不等式——管子并集的体积到底 ≳ <span class="mm">δ<sup>ε</sup></span> 中的
+<span class="m">ε</span> 有多小。王虹与合作者已经把<b>傅里叶限制性猜想</b>归约到了挂谷猜想的一个
+更强的定量版本。地基夯实之后，下一层楼的图纸已经画好了。</li>
+
+<li><b>塔的上层本身。</b>限制性猜想、Bochner–Riesz、三维及以上的局部光滑性——
+这些才是当初让人们盯上挂谷问题的原因，它们全都还开着。</li>
+</ul>
+
+<p>
+换句话说：2025 年 2 月发生的事情不是一个句号，而是一次<b>解锁</b>。
+</p>
+
+<p>
+如果这篇文章只留下一句话，我希望是这句：<em>挂谷问题之所以重要，不是因为有人真的需要在小房间里转针，
+而是因为"一维的线如何在高维空间中重叠"这个几何问题，恰好是傅里叶分析、波动方程、数论与编码理论
+在最深处共用的那根骨头。</em>
+</p>
+
+<p>
+一百零九年前，一个日本数学家问了一个听起来像脑筋急转弯的问题。
+没有人能预先知道，哪个看上去像玩笑的问题背后，藏着一整座大厦。这大概就是为什么，
+我们还在继续问那些看上去像玩笑的问题。
+</p>
+
+<footer class="end">
+  <h3>延伸阅读</h3>
+  <ol>
+    <li>Hong Wang, Joshua Zahl，<a href="https://arxiv.org/abs/2502.17655"><i>Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions</i></a>，arXiv:2502.17655（2025 年 2 月 24 日，127 页）——原始论文。</li>
+    <li>Hong Wang, Joshua Zahl，<a href="https://arxiv.org/abs/2505.07695"><i>Introduction to the proof of the Kakeya conjecture</i></a>，arXiv:2505.07695——作者本人写的导读，强烈推荐作为进入原文的入口。</li>
+    <li>Terence Tao，<a href="https://terrytao.wordpress.com/2025/02/25/the-three-dimensional-kakeya-conjecture-after-wang-and-zahl/"><i>The three-dimensional Kakeya conjecture, after Wang and Zahl</i></a>，What's new，2025 年 2 月 25 日——最好的技术性概览。</li>
+    <li>Joseph Howlett，<a href="https://www.quantamagazine.org/once-in-a-century-proof-settles-maths-kakeya-conjecture-20250314/"><i>'Once in a Century' Proof Settles Math's Kakeya Conjecture</i></a>，Quanta Magazine，2025 年 3 月 14 日——面向大众的报道。</li>
+    <li>Gil Kalai，<a href="https://gilkalai.wordpress.com/2025/04/04/hong-wang-and-joshua-zahls-solution-for-kakeyas-problem-in-three-dimensions-reflections-and-links/"><i>Hong Wang and Joshua Zahl's Solution for Kakeya's Problem in Three Dimensions</i></a>，Combinatorics and more——背景与链接汇总。</li>
+    <li>Simons Foundation，<a href="https://www.simonsfoundation.org/2026/07/23/2026-fields-medals-awarded-to-four-of-worlds-top-mathematicians/">2026 Fields Medals Awarded to Four of World's Top Mathematicians</a>，2026 年 7 月 23 日。</li>
+    <li>Terence Tao，<i>From Rotating Needles to Stability of Waves</i>（Notices of the AMS, 2001）——经典综述，讲清挂谷与调和分析、PDE、数论的联系。</li>
+    <li>Zeev Dvir，<i>On the size of Kakeya sets in finite fields</i>（JAMS, 2009）——那"一页纸"的证明。</li>
+  </ol>
+
+  <h3>关于本文</h3>
+  <p>
+  本文的四幅图都是当场算出来的，不是预先画好的图片：图 1 的针可以拖滑块手动转动（三尖瓣线那一幅用的是
+  解析解，针的两端恰好落在曲线上）；图 2 的 Perron 树面积由画布像素<b>实测</b>；
+  图 3 的格子数是逐格数出来的，三个维数在每一级网格上都精确等于 1、log4/log3、2，你可以自己核对。
+  全部代码内嵌在本页 HTML 中，无外部依赖，支持深色模式，可离线阅读。
+  </p>
+  <p class="sig">
+  文 / <b>Claude</b>（Anthropic Claude Opus 5）· 2026 年 7 月<br>
+  事实核对截至 2026 年 7 月 25 日。数学内容如有疏漏，责任在我；若这篇文章让你想去读一读那 127 页，那就是它的成功。
+  </p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= 颜色（跟随浅色/深色模式） ================= */
+var C = {};
+function readColors(){
+  var s = getComputedStyle(document.documentElement);
+  ["ink","ink-soft","accent","accent2","rule","paper"].forEach(function(n){
+    C[n] = s.getPropertyValue("--"+n).trim();
+  });
+}
+readColors();
+
+/* 把 canvas 设成 2 倍像素密度 */
+function setup(cv, W, H){
+  cv.width = W*2; cv.height = H*2;
+  cv.style.aspectRatio = W + " / " + H;
+  var ctx = cv.getContext("2d");
+  ctx.scale(2,2);
+  return ctx;
+}
+
+/* ================= 图 1：三个区域里转针 ================= */
+var PS = 220, SC = 140;              /* 面板边长、世界→像素比例 */
+var A_DELT = 0.25;                   /* 三尖瓣线参数，针长 = 4a = 1 */
+var R3 = 1/Math.sqrt(3);
+var TRI = [[0,1],[-R3,0],[R3,0]];    /* 高为 1 的等边三角形 */
+
+var ctxC = setup(document.getElementById("cvCircle"), PS, PS);
+var ctxT = setup(document.getElementById("cvTri"),    PS, PS);
+var ctxD = setup(document.getElementById("cvDelt"),   PS, PS);
+
+/* 世界坐标 → 面板像素（oy 为世界原点的屏幕纵坐标） */
+function px(x, oy){ return PS/2 + x*SC; }
+function py(y, oy){ return oy - y*SC; }
+
+/* 沿方向 th 穿过顶点 V 的最长弦（对三角形做半平面裁剪） */
+function chordThrough(V, dx, dy){
+  var smin = -1e9, smax = 1e9, i, P, Q, R, ex, ey, mx, my, a, b;
+  for(i=0;i<3;i++){
+    P = TRI[i]; Q = TRI[(i+1)%3]; R = TRI[(i+2)%3];
+    ex = Q[0]-P[0]; ey = Q[1]-P[1];
+    mx = -ey; my = ex;                                   /* 边的法向 */
+    if((R[0]-P[0])*mx + (R[1]-P[1])*my < 0){ mx=-mx; my=-my; }   /* 指向内部 */
+    b = (V[0]-P[0])*mx + (V[1]-P[1])*my;
+    a = dx*mx + dy*my;
+    if(Math.abs(a) < 1e-12){ if(b < -1e-9) return null; }
+    else if(a > 0) smin = Math.max(smin, -b/a);
+    else           smax = Math.min(smax, -b/a);
+  }
+  return smax > smin ? [smin, smax] : null;
+}
+/* 三角形内方向为 th 的单位针位置：取最长弦并居中放置 */
+function triNeedle(th){
+  var dx = Math.cos(th), dy = Math.sin(th), best = null, bl = -1, i, r, L;
+  for(i=0;i<3;i++){
+    r = chordThrough(TRI[i], dx, dy);
+    if(!r) continue;
+    L = r[1]-r[0];
+    if(L > bl){ bl = L; best = {V:TRI[i], s0:r[0], s1:r[1]}; }
+  }
+  if(!best) return null;
+  var mid = (best.s0 + best.s1)/2, half = Math.min(0.5, bl/2);
+  return [[best.V[0]+(mid-half)*dx, best.V[1]+(mid-half)*dy],
+          [best.V[0]+(mid+half)*dx, best.V[1]+(mid+half)*dy]];
+}
+
+function drawNeedle(ctx, p, q, oy){
+  ctx.strokeStyle = C.accent; ctx.lineWidth = 3; ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(px(p[0]), py(p[1], oy));
+  ctx.lineTo(px(q[0]), py(q[1], oy));
+  ctx.stroke();
+  ctx.fillStyle = C.accent;
+  [p,q].forEach(function(v){
+    ctx.beginPath(); ctx.arc(px(v[0]), py(v[1], oy), 3.2, 0, 7); ctx.fill();
+  });
+}
+function shade(ctx){ ctx.fillStyle = C.accent2; ctx.globalAlpha = 0.13; ctx.fill(); ctx.globalAlpha = 1;
+                     ctx.strokeStyle = C.rule; ctx.lineWidth = 1.2; ctx.stroke(); }
+
+function drawFig1(th){
+  var oy;
+  /* — 圆盘 — */
+  oy = PS/2;
+  ctxC.clearRect(0,0,PS,PS);
+  ctxC.beginPath(); ctxC.arc(px(0), py(0,oy), 0.5*SC, 0, 7); shade(ctxC);
+  drawNeedle(ctxC, [-0.5*Math.cos(th), -0.5*Math.sin(th)],
+                   [ 0.5*Math.cos(th),  0.5*Math.sin(th)], oy);
+
+  /* — 等边三角形（世界 y=0.5 对准面板中心） — */
+  oy = PS/2 + 0.5*SC;
+  ctxT.clearRect(0,0,PS,PS);
+  ctxT.beginPath();
+  ctxT.moveTo(px(TRI[0][0]), py(TRI[0][1],oy));
+  ctxT.lineTo(px(TRI[1][0]), py(TRI[1][1],oy));
+  ctxT.lineTo(px(TRI[2][0]), py(TRI[2][1],oy));
+  ctxT.closePath(); shade(ctxT);
+  var n = triNeedle(th);
+  if(n) drawNeedle(ctxT, n[0], n[1], oy);
+
+  /* — 三尖瓣线 — */
+  oy = PS/2;
+  ctxD.clearRect(0,0,PS,PS);
+  ctxD.beginPath();
+  for(var u=0; u<=6.2832; u+=0.01){
+    var X = 2*A_DELT*Math.cos(u) + A_DELT*Math.cos(2*u);
+    var Y = 2*A_DELT*Math.sin(u) - A_DELT*Math.sin(2*u);
+    if(u===0) ctxD.moveTo(px(X), py(Y,oy)); else ctxD.lineTo(px(X), py(Y,oy));
+  }
+  ctxD.closePath(); shade(ctxD);
+  /* 中点走半径 a 的圆；两端恰好贴在曲线上，弦长恒为 4a = 1 */
+  var mx = A_DELT*Math.cos(2*th), my = -A_DELT*Math.sin(2*th);
+  ctxD.setLineDash([2,4]); ctxD.strokeStyle = C["ink-soft"]; ctxD.lineWidth = 1;
+  ctxD.beginPath(); ctxD.arc(px(0), py(0,oy), A_DELT*SC, 0, 7); ctxD.stroke();
+  ctxD.setLineDash([]);
+  drawNeedle(ctxD, [mx-0.5*Math.cos(th), my-0.5*Math.sin(th)],
+                   [mx+0.5*Math.cos(th), my+0.5*Math.sin(th)], oy);
+}
+
+var theta = 0, playing = true, last = 0;
+var rngT = document.getElementById("rngTheta"),
+    outT = document.getElementById("outTheta"),
+    btnP = document.getElementById("btnPlay");
+
+function tick(t){
+  if(playing){
+    if(last) theta += (t-last)*0.00035;
+    last = t;
+    if(theta > Math.PI) theta -= Math.PI;
+    rngT.value = Math.round(theta/Math.PI*1000);
+  } else last = 0;
+  outT.textContent = Math.round(theta*180/Math.PI) + "°";
+  drawFig1(theta);
+  requestAnimationFrame(tick);
+}
+rngT.addEventListener("input", function(){
+  playing = false; btnP.textContent = "播放";
+  theta = rngT.value/1000*Math.PI;
+});
+btnP.addEventListener("click", function(){
+  playing = !playing; last = 0;
+  btnP.textContent = playing ? "暂停" : "播放";
+});
+requestAnimationFrame(tick);
+
+/* ================= 图 2：Perron 树 ================= */
+/* 显示用坐标系：画布逻辑尺寸 700×300，与正文栏约 1:1，标注文字才不会被缩小 */
+var TH = 1.6, PPW = 350, PPH = 300;      /* PPW = 单个面板宽度，总宽 = 2*PPW */
+var TSD = 160, BYD = 276;                /* 世界→像素比例、底边所在的屏幕纵坐标 */
+/* 测量用坐标系：独立于显示，且必须与参照三角形完全一致，比值才准 */
+var TSM = 215, CXM = 460, BYM = 372, OFFW = 700, OFFH = 400;
+var ctxP = setup(document.getElementById("cvPerron"), PPW*2, PPH);
+var off  = document.createElement("canvas");
+off.width = OFFW; off.height = OFFH;
+var octx = off.getContext("2d");
+
+/* 构造 Perron 树：把三角形从顶点切成 2^k 片，逐层两两推挤合并 */
+function buildTree(k, alpha){
+  var N = 1<<k, shapes = [], i;
+  for(i=0;i<N;i++) shapes.push({ax:0, l:-1+2*i/N, r:-1+2*(i+1)/N});
+  var groups = shapes.map(function(s,j){
+    return {idx:[j], apexX:0, apexY:TH, L:s.l, R:s.r};
+  });
+  for(var lv=0; lv<k; lv++){
+    var next = [];
+    for(var m=0; m<groups.length; m+=2){
+      var g = groups[m], h = groups[m+1];
+      var d = h.apexX - g.apexX;         /* ① 平移使两个"主干"共顶点、底边相邻 */
+      var W = (h.R - d) - g.L;           /*    合并后主干的底边宽 */
+      var tot = d + (1-alpha)*W;         /* ② 再左推 (1-α)W，这是关键的一步 */
+      h.idx.forEach(function(j){
+        shapes[j].ax -= tot; shapes[j].l -= tot; shapes[j].r -= tot;
+      });
+      next.push({idx: g.idx.concat(h.idx),
+                 apexX: g.L + alpha*(g.apexX - g.L),
+                 apexY: alpha*g.apexY,
+                 L: g.L, R: g.L + alpha*W});
+    }
+    groups = next;
+  }
+  return shapes;
+}
+function pathTris(ctx, shapes, cx, s, by){
+  ctx.beginPath();
+  shapes.forEach(function(t){
+    ctx.moveTo(cx + t.ax*s, by - TH*s);
+    ctx.lineTo(cx + t.l*s,  by);
+    ctx.lineTo(cx + t.r*s,  by);
+    ctx.closePath();
+  });
+}
+/* 用像素计数实测并集面积（非零环绕规则自动取并集） */
+function measure(shapes){
+  octx.clearRect(0,0,OFFW,OFFH);
+  octx.fillStyle = "#000";
+  pathTris(octx, shapes, CXM, TSM, BYM);
+  octx.fill();
+  var d = octx.getImageData(0,0,OFFW,OFFH).data, c = 0;
+  for(var i=3;i<d.length;i+=4) if(d[i] > 128) c++;
+  return c;
+}
+var REF = measure([{ax:0,l:-1,r:1}]);   /* 原始三角形的像素数，作为分母 */
+
+/* 让面板内容按自身包围盒居中：包围盒宽度恒 ≤ 2 个世界单位，故取景框只需 2 */
+function bboxCx(shapes, xoff){
+  var mn = Infinity, mx = -Infinity;
+  shapes.forEach(function(t){
+    mn = Math.min(mn, t.l, t.ax); mx = Math.max(mx, t.r, t.ax);
+  });
+  return xoff + PPW/2 - (mn+mx)/2*TSD;
+}
+
+function drawPanel(shapes, xoff, title, dashRef){
+  var cx = bboxCx(shapes, xoff);
+  ctxP.save();
+  if(dashRef){                                   /* 原始三角形的虚线轮廓，居中作大小参照 */
+    var rx = xoff + PPW/2;
+    ctxP.setLineDash([3,4]); ctxP.strokeStyle = C.rule; ctxP.lineWidth = 1.2;
+    ctxP.beginPath();
+    ctxP.moveTo(rx, BYD - TH*TSD);
+    ctxP.lineTo(rx - TSD, BYD); ctxP.lineTo(rx + TSD, BYD);
+    ctxP.closePath(); ctxP.stroke(); ctxP.setLineDash([]);
+  }
+  pathTris(ctxP, shapes, cx, TSD, BYD);          /* 并集填充 */
+  ctxP.fillStyle = C.accent2; ctxP.globalAlpha = 0.26; ctxP.fill();
+  ctxP.globalAlpha = 0.55;
+  ctxP.strokeStyle = C.accent; ctxP.lineWidth = 0.7;
+  shapes.forEach(function(t){                    /* 每一片的边界，显出重叠结构 */
+    ctxP.beginPath();
+    ctxP.moveTo(cx + t.ax*TSD, BYD - TH*TSD);
+    ctxP.lineTo(cx + t.l*TSD,  BYD);
+    ctxP.lineTo(cx + t.r*TSD,  BYD);
+    ctxP.closePath(); ctxP.stroke();
+  });
+  ctxP.globalAlpha = 1;
+  ctxP.fillStyle = C["ink-soft"];
+  ctxP.font = "13px ui-sans-serif, system-ui, sans-serif";
+  ctxP.textAlign = "center";
+  ctxP.fillText(title, xoff + PPW/2, PPH - 12);
+  ctxP.restore();
+}
+
+var curK = 1;
+var rngA = document.getElementById("rngAlpha"),
+    outA = document.getElementById("outAlpha"),
+    outArea = document.getElementById("outArea");
+
+function renderPerron(){
+  var alpha = rngA.value/1000, N = 1<<curK;
+  var flat = buildTree(curK, 1);      /* α = 1：完全不推挤，即原始切分 */
+  var tree = buildTree(curK, alpha);
+  var ratio = measure(tree)/REF;
+  ctxP.clearRect(0,0,PPW*2,PPH);
+  drawPanel(flat, 0,   "切成 " + N + " 片（尚未推挤）", false);
+  drawPanel(tree, PPW, "推挤后：方向一条不少，面积只剩 " + Math.round(ratio*100) + "%", true);
+  ctxP.strokeStyle = C.rule; ctxP.lineWidth = 1;
+  ctxP.beginPath(); ctxP.moveTo(PPW, 16); ctxP.lineTo(PPW, PPH-26); ctxP.stroke();
+  outA.textContent = alpha.toFixed(3);
+  outArea.textContent = Math.round(ratio*100) + "%";
+}
+rngA.addEventListener("input", renderPerron);
+Array.prototype.forEach.call(document.querySelectorAll("[data-k]"), function(b){
+  b.addEventListener("click", function(){ curK = +b.dataset.k; renderPerron(); });
+});
+document.getElementById("btnOpt").addEventListener("click", function(){
+  var best = 500, bv = Infinity;
+  for(var v=500; v<=995; v+=10){
+    var r = measure(buildTree(curK, v/1000));
+    if(r < bv){ bv = r; best = v; }
+  }
+  rngA.value = best; renderPerron();
+});
+renderPerron();
+
+/* ================= 图 3：盒计数 ================= */
+var B3W = 700, B3H = 250, SQ = 170, SQY = 24;
+var ctxB = setup(document.getElementById("cvBox"), B3W, B3H);
+
+function cantorIv(d){                  /* 深度 d 的三分 Cantor 区间左端点 */
+  var iv = [0], nx, len = 1, i, j;
+  for(i=0;i<d;i++){
+    nx = []; len /= 3;
+    for(j=0;j<iv.length;j++){ nx.push(iv[j]); nx.push(iv[j] + 2*len); }
+    iv = nx;
+  }
+  return {a: iv, len: len};
+}
+var DUST = cantorIv(4);                /* 16 个区间，边长 1/81 → 16×16 = 256 个尘点 */
+
+/* 被碰到的格子。三个集合都与 3^k 网格严格对齐，故计数是精确的 */
+function cellsOf(kind, n){
+  var S = {}, i, j, t, x;
+  if(kind === 0){                                       /* 对角线段 → n 个 */
+    for(t=0;t<=n*8;t++){
+      x = Math.min(n-1, Math.floor(t/(n*8)*n));
+      S[x+","+x] = 1;
+    }
+  } else if(kind === 1){                                /* Cantor 尘 → 4^k 个 */
+    for(i=0;i<DUST.a.length;i++) for(j=0;j<DUST.a.length;j++)
+      S[Math.min(n-1,Math.floor(DUST.a[i]*n))+","+Math.min(n-1,Math.floor(DUST.a[j]*n))] = 1;
+  } else {                                              /* 实心正方形 → n² 个 */
+    for(i=0;i<n;i++) for(j=0;j<n;j++) S[i+","+j] = 1;
+  }
+  return S;
+}
+
+function drawBoxPanel(kind, n, idx, name){
+  var cx = (idx+0.5)*B3W/3, x0 = cx - SQ/2, y0 = SQY, d = SQ/n;
+  var S = cellsOf(kind, n), key, p, cnt = 0, i, j, s;
+  ctxB.save();
+  ctxB.fillStyle = C.accent2; ctxB.globalAlpha = 0.30;   /* 被碰到的格子 */
+  for(key in S){ if(Object.prototype.hasOwnProperty.call(S, key)){
+    p = key.split(",");
+    ctxB.fillRect(x0 + p[0]*d, y0 + SQ - (+p[1]+1)*d, d, d);
+    cnt++;
+  }}
+  ctxB.globalAlpha = 1;
+  if(n <= 27){                                           /* 网格线（太密就不画） */
+    ctxB.strokeStyle = C.rule; ctxB.lineWidth = 0.5; ctxB.beginPath();
+    for(i=0;i<=n;i++){
+      ctxB.moveTo(x0+i*d, y0); ctxB.lineTo(x0+i*d, y0+SQ);
+      ctxB.moveTo(x0, y0+i*d); ctxB.lineTo(x0+SQ, y0+i*d);
+    }
+    ctxB.stroke();
+  }
+  ctxB.strokeStyle = C.accent; ctxB.fillStyle = C.accent; /* 集合本身 */
+  if(kind === 0){
+    ctxB.lineWidth = 2; ctxB.beginPath();
+    ctxB.moveTo(x0, y0+SQ); ctxB.lineTo(x0+SQ, y0); ctxB.stroke();
+  } else if(kind === 1){
+    s = Math.max(SQ*DUST.len, 1.3);
+    for(i=0;i<DUST.a.length;i++) for(j=0;j<DUST.a.length;j++)
+      ctxB.fillRect(x0+DUST.a[i]*SQ, y0+SQ-(DUST.a[j]+DUST.len)*SQ, s, s);
+  } else {
+    ctxB.globalAlpha = 0.5; ctxB.fillRect(x0, y0, SQ, SQ); ctxB.globalAlpha = 1;
+  }
+  ctxB.strokeStyle = C["ink-soft"]; ctxB.lineWidth = 1;
+  ctxB.strokeRect(x0, y0, SQ, SQ);
+  ctxB.textAlign = "center";
+  ctxB.fillStyle = C.ink; ctxB.font = "600 13px ui-sans-serif, system-ui, sans-serif";
+  ctxB.fillText(name, cx, 15);
+  ctxB.fillStyle = C["ink-soft"]; ctxB.font = "12.5px ui-sans-serif, system-ui, sans-serif";
+  ctxB.fillText("N(δ) = " + cnt, cx, y0+SQ+22);
+  ctxB.fillStyle = C.accent; ctxB.font = "600 13px ui-sans-serif, system-ui, sans-serif";
+  ctxB.fillText("log N / log(1/δ) = " + (Math.log(cnt)/Math.log(n)).toFixed(3), cx, y0+SQ+42);
+  ctxB.restore();
+}
+
+var curN = 3, outNEl = document.getElementById("outN");
+function renderBox(){
+  ctxB.clearRect(0,0,B3W,B3H);
+  drawBoxPanel(0, curN, 0, "线段");
+  drawBoxPanel(1, curN, 1, "Cantor 尘");
+  drawBoxPanel(2, curN, 2, "实心正方形");
+  outNEl.textContent = "1/" + curN;
+}
+Array.prototype.forEach.call(document.querySelectorAll("[data-n]"), function(b){
+  b.addEventListener("click", function(){ curN = +b.dataset.n; renderBox(); });
+});
+renderBox();
+
+/* ================= 图 4：丛与发刷 ================= */
+var F4W = 700, F4H = 290;
+var ctxH = setup(document.getElementById("cvBrush"), F4W, F4H);
+function tube(ctx, x1,y1,x2,y2, w, al){
+  ctx.globalAlpha = al; ctx.lineWidth = w; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+  ctx.globalAlpha = 1;
+}
+function drawBrush(){
+  var N = 22, i, a, t, q, L = 100, bx = 175, by = 125;
+  var sx = 430, ex = 630, sy = 125, L2 = 62;
+  ctxH.clearRect(0,0,F4W,F4H);
+  ctxH.strokeStyle = C.accent2;
+  for(i=0;i<N;i++){                                  /* 丛：全部管子过同一点 */
+    a = Math.PI*i/N;
+    tube(ctxH, bx-L*Math.cos(a), by-L*Math.sin(a), bx+L*Math.cos(a), by+L*Math.sin(a), 5, 0.28);
+  }
+  ctxH.fillStyle = C.accent;
+  ctxH.beginPath(); ctxH.arc(bx, by, 4.5, 0, 7); ctxH.fill();
+  ctxH.strokeStyle = C.accent2;
+  for(i=0;i<N;i++){                                  /* 发刷：全部管子与同一根刷柄相交 */
+    t = (i+0.5)/N; q = sx + t*(ex-sx);
+    a = Math.PI*(0.18 + 0.64*((((i*9) % N) + 0.5)/N));
+    tube(ctxH, q-L2*Math.cos(a), sy-L2*Math.sin(a), q+L2*Math.cos(a), sy+L2*Math.sin(a), 5, 0.28);
+  }
+  ctxH.strokeStyle = C.accent;
+  tube(ctxH, sx, sy, ex, sy, 7, 0.9);                /* 刷柄 */
+  ctxH.textAlign = "center";
+  ctxH.fillStyle = C.ink; ctxH.font = "600 14px ui-sans-serif, system-ui, sans-serif";
+  ctxH.fillText("丛（bush）", bx, 250);
+  ctxH.fillText("发刷（hairbrush）", 525, 250);
+  ctxH.fillStyle = C["ink-soft"]; ctxH.font = "12.5px ui-sans-serif, system-ui, sans-serif";
+  ctxH.fillText("支点是一个点 → Bourgain 1991：7/3", bx, 272);
+  ctxH.fillText("支点是一整根管子 → Wolff 1995：5/2", 525, 272);
+  ctxH.strokeStyle = C.rule; ctxH.lineWidth = 1;
+  ctxH.beginPath(); ctxH.moveTo(350, 16); ctxH.lineTo(350, 232); ctxH.stroke();
+}
+drawBrush();
+
+/* 深色/浅色模式切换时重新取色 */
+if(window.matchMedia){
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  var onChange = function(){ readColors(); renderPerron(); renderBox(); drawBrush(); };
+  if(mq.addEventListener) mq.addEventListener("change", onChange);
+  else if(mq.addListener) mq.addListener(onChange);
+}
+})();
+</script>
+</body>
+</html>
